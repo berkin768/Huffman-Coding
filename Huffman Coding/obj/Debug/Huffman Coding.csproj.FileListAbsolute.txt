@@ -1,0 +1,6 @@
+c:\users\berki\documents\visual studio 2015\Projects\Huffman Coding\Huffman Coding\bin\Debug\Huffman Coding.exe.config
+c:\users\berki\documents\visual studio 2015\Projects\Huffman Coding\Huffman Coding\bin\Debug\Huffman Coding.exe
+c:\users\berki\documents\visual studio 2015\Projects\Huffman Coding\Huffman Coding\bin\Debug\Huffman Coding.pdb
+c:\users\berki\documents\visual studio 2015\Projects\Huffman Coding\Huffman Coding\obj\Debug\Huffman Coding.csprojResolveAssemblyReference.cache
+c:\users\berki\documents\visual studio 2015\Projects\Huffman Coding\Huffman Coding\obj\Debug\Huffman Coding.exe
+c:\users\berki\documents\visual studio 2015\Projects\Huffman Coding\Huffman Coding\obj\Debug\Huffman Coding.pdb

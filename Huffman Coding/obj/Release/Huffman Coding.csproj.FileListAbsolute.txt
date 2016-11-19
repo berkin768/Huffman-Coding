@@ -1,0 +1,5 @@
+C:\Users\berki\documents\visual studio 2015\Projects\Huffman Coding\Huffman Coding\bin\Release\Huffman Coding.exe.config
+C:\Users\berki\documents\visual studio 2015\Projects\Huffman Coding\Huffman Coding\bin\Release\Huffman Coding.exe
+C:\Users\berki\documents\visual studio 2015\Projects\Huffman Coding\Huffman Coding\bin\Release\Huffman Coding.pdb
+C:\Users\berki\documents\visual studio 2015\Projects\Huffman Coding\Huffman Coding\obj\Release\Huffman Coding.exe
+C:\Users\berki\documents\visual studio 2015\Projects\Huffman Coding\Huffman Coding\obj\Release\Huffman Coding.pdb
