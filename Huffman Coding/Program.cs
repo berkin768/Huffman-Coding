@@ -13,34 +13,28 @@ namespace Huffman_Coding
     {
         private static Stack<List<HufmannLetter>> BuildStack(HufmannLetter[] letters)
         {
-            List<HufmannLetter> letterList = new List<HufmannLetter>();
-            List<HufmannLetter> dropLetterList = new List<HufmannLetter>();
-            Stack<List<HufmannLetter>> steps = new Stack<List<HufmannLetter>>();
-
-            foreach (var letter in letters)
-            {
-                letterList.Add(letter);
-            }
-
+            List<HufmannLetter> letterList = letters.ToList();  //List of letters
+            var dropLetterList = new List<HufmannLetter>();  //This list stores 3 letters, for example 3A 4B -> 7AB. 
+            var steps = new Stack<List<HufmannLetter>>();  //Stack for building tree
+                    
             while (true)
             {
-                var lowestChar = letterList.Where(c => c.LetterFrequency == letterList.Min(x => x.LetterFrequency)).ElementAt(0);
-                dropLetterList.Add(lowestChar);
-                letterList.Remove(lowestChar);
+                var lowestChar = letterList.Where(c => c.LetterFrequency == letterList.Min(x => x.LetterFrequency)).ElementAt(0); //minimum char in the list
+                dropLetterList.Add(lowestChar);  //add it to the list
+                letterList.Remove(lowestChar);   //remove from list of letters
 
                 if (dropLetterList.Count == 2)
                 {
                     string letterName = dropLetterList.ElementAt(0).LetterName + dropLetterList.ElementAt(1).LetterName;
                     int frequency = dropLetterList.ElementAt(0).LetterFrequency + dropLetterList.ElementAt(1).LetterFrequency;
-                    HufmannLetter newLetter = new HufmannLetter(letterName, frequency);
+                    HufmannLetter newLetter = new HufmannLetter(letterName, frequency);  //create 7AB
 
-                    dropLetterList.Add(newLetter);
-                    letterList.Add(newLetter);
-
-                    List<HufmannLetter> tempLetterLink = new List<HufmannLetter>(dropLetterList);
-                    steps.Push(tempLetterLink);
+                    dropLetterList.Add(newLetter);  //add to droplist
+                    letterList.Add(newLetter);   //add to main letter list
+                  
+                    steps.Push(new List<HufmannLetter>(dropLetterList));
                     dropLetterList.Clear();
-                    if (letterList.Count == 1)
+                    if (letterList.Count == 1)  //if list stores only one char (ABCDE). Finished
                         break;
                 }
             }
@@ -50,17 +44,21 @@ namespace Huffman_Coding
         private static void BuildTree(Stack<List<HufmannLetter>> letters)
         {
             HuffmanTree tree = new HuffmanTree();
-            tree.Insert(letters.Peek()[2], 0, null);
+            tree.Insert(letters.Peek()[2], 0, null);  //ROOT
             while (letters.Count != 0)
             {
-                HufmannLetter parent = letters.Peek()[2];
+                HufmannLetter parent = letters.Peek()[2];  //2A and 3D 's parent is 5AD
 
                 for (int i = letters.Peek().Count - 2; i >= 0; i--)
                 {
-                    tree.Insert(letters.Peek()[i], i, parent);
+                    tree.Insert(letters.Peek()[i], i, parent); //if i =0, left child, else right child. Parent 5AD
                 }
                 letters.Pop();
             }
+
+            TreePrinter btr = new TreePrinter();  //Print the tree
+            btr.Print(tree.Root);
+            Console.WriteLine();
         }
 
         private static double CodeLength(HufmannLetter[] letters)
@@ -102,7 +100,7 @@ namespace Huffman_Coding
         private static HufmannLetter[] ReadFile(string filePath, HufmannLetter[] letter)
         {
             string message = File.ReadAllText(filePath, Encoding.UTF8);
-            int differentCharNumber = 5;
+            int differentCharNumber = letter.Length;
             var letters = message.ToCharArray().GroupBy(x => x).Where(y => y.Any()).Select(z => new { charName = z.Key, charCount = z.Count() });
 
             for (int i = 0; i < differentCharNumber; i++)
@@ -129,7 +127,7 @@ namespace Huffman_Coding
 
             for (int i = 0; i < letterNumber; i++)
             {
-                int selector = random.Next(0, 5);
+                int selector = random.Next(0, letters.Length);
                 message += letters[selector];
             }
 
@@ -145,15 +143,13 @@ namespace Huffman_Coding
             string filePath = "message.txt";
 
             HufmannLetter[] letter = new HufmannLetter[5];
-            if (FileExist(filePath))
+
+            if (!FileExist(filePath))
             {
-                letter = ReadFile(filePath, letter);
+                CreateFile(filePath);               
             }
-            else
-            {
-                CreateFile(filePath);
-                letter = ReadFile(filePath, letter);
-            }
+
+            letter = ReadFile(filePath, letter);
 
             CalculateProbabilty(letter);
             double entropy = HufmannEntropy(letter);

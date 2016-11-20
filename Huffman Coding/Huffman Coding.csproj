@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TreePrinter.cs" />
     <Compile Include="HuffmanTree.cs" />
     <Compile Include="HufmannLetter.cs" />
     <Compile Include="Node.cs" />
